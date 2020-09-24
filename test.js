@@ -1,13 +1,19 @@
-const Person = require('./person');
-const Person2 = require('./person');
+const http = require('http');
+const fs = require('fs');
 
-const p1 = new Person('David', 23);
+const server = http.createServer((req, res)=>{
+    fs.writeFile(
+        __dirname + '/../data/headers01.txt',
+        JSON.stringify(req.headers),
+        error=>{
+            if(error){
+                res.end('Fail: ' + error);
+            } else {
+                res.end('OK');
+            }
+        }
+    );
+});
 
-console.log(p1);
-console.log(''+p1);
-p1.name = 'Bill';
-console.log(p1.toJSON());
-
-console.log(Person===Person2);
-
+server.listen(3000);
 
